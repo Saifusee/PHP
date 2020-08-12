@@ -1,0 +1,64 @@
+#Engine On
+RewriteEngine On
+
+#---------------------------------------------------------------------------------------------------
+#Conditions
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+#---------------------------------------------------------------------------------------------------
+#RULES
+
+
+#Homepage when type home or nothing
+RewriteRule ^home$ index.php [NC,L]
+RewriteRule ^()$ index.php [NC,L]
+
+#Home main pages
+RewriteRule ^registration$ registration.php [NC,L]
+RewriteRule ^search$ search.php [NC,L]
+RewriteRule ^post/(.+)$ post.php?p_id=$1 [NC,L]
+RewriteRule ^author/(.+)$ author_post.php?author=$1 [NC,L]
+RewriteRule ^category/(.+)$ category.php?cat_id=$1 [NC,L]
+
+#if type admin instead of home go to admin section even after admin everything empty
+RewriteRule ^admin$ admin/index.php [NC,L]
+
+#admin main pages
+RewriteRule ^admin/profile$ admin/profile.php [NC,L]
+RewriteRule ^admin/comments$ admin/comments.php [NC,L]
+RewriteRule ^admin/categories$ admin/categories.php [NC,L]
+RewriteRule ^admin/posts$ admin/posts.php [NC,L]
+
+#admin users pages
+RewriteRule ^admin/users$ admin/users.php [NC,L]
+RewriteRule ^admin/users/add$ admin/users.php?source=add_user [NC,L]
+RewriteRule ^admin/users/edit/(.+)$ admin/users.php?source=edit_user&u_id=$1 [NC,L]
+RewriteRule ^admin/users/(.+)/(.+)$ admin/users.php?$1=$2 [NC,L]
+
+#admin posts pages
+RewriteRule ^admin/posts$ admin/posts.php [NC,L]
+RewriteRule ^admin/posts/add$ admin/posts.php?source=add_post [NC,L]
+RewriteRule ^admin/posts/edit/(.+)$ admin/posts.php?source=edit_post&p_id=$1 [NC,L]
+RewriteRule ^admin/posts/(.+)/(.+)$ admin/posts.php?$1=$2 [NC,L]
+
+
+#for post_comments bcz it take more than one parameter
+RewriteRule ^admin/comments/post_comment/(.+)/(.+)/(.+)$ admin/comments.php?source=post_comment&$1=$2&id=$3 [NC,L]
+RewriteRule ^admin/comments/post_comment/(.+)$ admin/comments.php?source=post_comment&id=$1 [NC,L]
+
+
+
+#admin delete and status toggling in effect
+#$1 is page name like comment.php
+#$2 is first parameter like delete, approve, admin, effect
+#$3 its value of that parameter like id of users, comment, categories
+RewriteRule ^admin/(.+)/(.+)/(.+)$ admin/$1.php?$2=$3 [NC,L]
+
+
+
+
+
+
+
+
